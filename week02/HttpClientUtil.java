@@ -1,3 +1,4 @@
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -9,19 +10,17 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class HttpClientUtil {
 
     private static CloseableHttpClient httpClient;
 
-    private static final Logger logger = LoggerFactory.getLogger(HttpClientUtil.class);
 
     static {
         RequestConfig defaultRequestConfig = RequestConfig.custom()
@@ -39,7 +38,6 @@ public class HttpClientUtil {
                     try {
                         httpClient.close();
                     } catch (IOException e) {
-                        logger.warn("http_client_close_exception_{}", e.getMessage());
                     }
                 })
         );
@@ -67,12 +65,11 @@ public class HttpClientUtil {
             };
             try {
                 responseBody = httpClient.execute(httpGet, responseHandler);
-                logger.info("uri : [{}], parameters: [{}], responseBody: [{}]", uri, parameters.toString(), responseBody);
             } catch (IOException e) {
-                logger.warn(uri + e.getMessage());
+                log.warn("exception:[{}]",e.getMessage());
             }
         } catch (URISyntaxException e) {
-            logger.warn(uri + e.getMessage());
+            log.warn("exception:[{}]",e.getMessage());
         }
         return responseBody;
     }

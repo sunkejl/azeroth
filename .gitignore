@@ -28,3 +28,5 @@ hs_err_pid*
 
 /target/
 /out/
+.DS_Store
+/week01/.DS_Store
