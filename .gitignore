@@ -30,3 +30,9 @@ hs_err_pid*
 /out/
 .DS_Store
 /week01/.DS_Store
+
+/week05/.mvn
+/week05/mvnw
+/week05/mvnw.cmd
+/week05/target
+/week05/week05.iml
